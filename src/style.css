@@ -86,6 +86,24 @@ h1 {
   background: #1d4ed8;
 }
 
+.filter-actions {
+  min-height: 44px;
+  margin-bottom: 20px;
+}
+
+.filter-button {
+  padding: 10px 14px;
+  border: 1px solid #f59e0b;
+  border-radius: 12px;
+  background: #fef3c7;
+  color: #92400e;
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  background: #fde68a;
+}
+
 .todo-list {
   list-style: none;
   padding: 0;
