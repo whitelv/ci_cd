@@ -70,6 +70,6 @@ test("deleteTask removes the requested task", () => {
 test("addTask ignores empty values", () => {
   const tasks = addTask("   ");
 
-  assert.deepEqual(tasks, ["asss"]);
+  assert.deepEqual(tasks, []);
   assert.deepEqual(getTasks(), []);
 });
