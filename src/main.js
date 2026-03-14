@@ -1,6 +1,40 @@
 import "./style.css";
+import * as Sentry from "@sentry/browser";
 import posthog from "posthog-js";
 import { addTask, deleteTask, getTasks } from "./todo.js";
+
+Sentry.init({
+  dsn: "https://2f641e2d9fec2964b515705a851d37dd@o4511044254302208.ingest.de.sentry.io/4511044258234448",
+  integrations: [
+    Sentry.browserTracingIntegration(),
+    Sentry.replayIntegration()
+  ],
+  tracesSampleRate: 1.0,
+  replaysSessionSampleRate: 1.0,
+  replaysOnErrorSampleRate: 1.0,
+  environment: "development"
+});
+
+const setSentryUserContext = (user) => {
+  Sentry.setUser({
+    id: user.id,
+    email: user.email,
+    segment: user.segment
+  });
+  Sentry.setTag("segment", user.segment);
+};
+
+const clearSentryUserContext = () => {
+  Sentry.setUser(null);
+};
+
+// Replace this with real auth data when login/logout is implemented.
+setSentryUserContext({
+  id: "12345",
+  email: "student@example.com",
+  segment: "premium_user"
+});
+window.addEventListener("unidone:logout", clearSentryUserContext);
 
 posthog.init('phc_VvdnbtI3EOsDdHH4GXgbh6wNKY4hmCVTTyiN7OPDXoc', {
   api_host: 'https://us.i.posthog.com',
@@ -12,6 +46,7 @@ posthog.init('phc_VvdnbtI3EOsDdHH4GXgbh6wNKY4hmCVTTyiN7OPDXoc', {
 const form = document.querySelector("#todo-form");
 const input = document.querySelector("#task-input");
 const filterActions = document.querySelector("#filter-actions");
+const breakWorldButton = document.querySelector("#break-world-button");
 const list = document.querySelector("#todo-list");
 const status = document.querySelector("#app-status");
 const appStatus = import.meta.env.VITE_APP_STATUS ?? "Unknown";
@@ -38,6 +73,12 @@ posthog.onFeatureFlags(() => {
 });
 
 renderUrgentFilterButton();
+
+const throwError = () => {
+  throw new Error("Break the world button clicked.");
+};
+
+breakWorldButton.addEventListener("click", throwError);
 
 const renderTasks = (tasks) => {
   list.replaceChildren();

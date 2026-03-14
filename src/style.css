@@ -104,6 +104,21 @@ h1 {
   background: #fde68a;
 }
 
+.danger-button {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: #7f1d1d;
+  color: #fff;
+  cursor: pointer;
+}
+
+.danger-button:hover {
+  background: #991b1b;
+}
+
 .todo-list {
   list-style: none;
   padding: 0;
